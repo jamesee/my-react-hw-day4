@@ -11,7 +11,7 @@ const path = require("path");
 module.exports = {
   require: [path.resolve(__dirname, "src/index.css")],
   components: [
-   'src/domains/marketplace/components/**/*.jsx', 
+    'src/domains/marketplace/components/**/*.jsx', 
     'src/components/**/*.jsx'
   ],
   webpackConfig:

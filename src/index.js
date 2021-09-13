@@ -7,7 +7,6 @@ import { MarketplacePublic } from "./pages/marketplace-public";
 ReactDOM.render(
   <AuthProvider>
     <MarketplacePublic />
-    {/* <Marketplace /> */}
   </AuthProvider>,
   document.querySelector("#root")
 );

@@ -1,5 +1,5 @@
 import React from "react";
-import { TrashIcon, ShoppingBagIcon } from "@heroicons/react/outline";
+import { TrashIcon } from "@heroicons/react/outline";
 import PropTypes from "prop-types";
 
 // const sampleCartItem = [
@@ -23,36 +23,7 @@ import PropTypes from "prop-types";
 //     }
 // ]
 
-export const CartEmpty = () => {
-    return (
-        <div className="px-4 sm:px-6 pb-12">
-            <div className="pt-6 pb-5">
-                <div id="no-cart-item-message">
-                    <div className="p-4 text-center">
-                        <ShoppingBagIcon className="inline-block w-12 h-12 text-gray-300" />
-                        <p className="text-center text-gray-500">There is no item in your shopping cart</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
 
-}
-export const CartTotal = (props) => {
-    const { cartTotal } = props;
-    return (
-
-        <div>
-            <div className="flex-shrink-0 px-4 py-4 flex justify-end border-t border-gray-200">
-                <span>Total
-                    <span className="text-2xl px-4"> ${cartTotal}</span>
-                </span>
-            </div>
-
-
-        </div>
-    )
-}
 
 export const ListingCartItem = (props) => {
     const { item, onClick } = props
@@ -68,7 +39,7 @@ export const ListingCartItem = (props) => {
                     <p className="text-sm text-gray-500">${price} x {quantity}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div>${Number(price) * Number(quantity)}</div>
+                    <div>${(Number(price) * Number(quantity)).toFixed(2)}</div>
                     <button className="
                         text-red-400
                         p-1
@@ -95,18 +66,20 @@ export const ListingCartItem = (props) => {
     )
 }
 
-CartTotal.propTypes = {
-    cartTotal: PropTypes.number.isRequired
-}
 
 ListingCartItem.propTypes = {
+    /** Item is an object */
     item: PropTypes.shape({
             quantity: PropTypes.number.isRequired,
+            /** listing is an object */
             listing: PropTypes.shape({
                         title: PropTypes.string.isRequired,
                         price: PropTypes.number.isRequired,
                         imageUrl: PropTypes.string.isRequired
             }).isRequired
     }).isRequired,
+    /** to pass in a delete function */
     onClick: PropTypes.func.isRequired
   }
+
+
