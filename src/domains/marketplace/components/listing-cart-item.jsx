@@ -1,5 +1,6 @@
 import React from "react";
 import { TrashIcon, ShoppingBagIcon } from "@heroicons/react/outline";
+import PropTypes from "prop-types";
 
 // const sampleCartItem = [
 //     {
@@ -40,6 +41,7 @@ export const CartEmpty = () => {
 export const CartTotal = (props) => {
     const { cartTotal } = props;
     return (
+
         <div>
             <div className="flex-shrink-0 px-4 py-4 flex justify-end border-t border-gray-200">
                 <span>Total
@@ -84,7 +86,6 @@ export const ListingCartItem = (props) => {
                         onClick={onClick}
                     >
                         <TrashIcon className="w-6 h-6" />
-
                     </button>
 
                 </div>
@@ -93,3 +94,19 @@ export const ListingCartItem = (props) => {
         </li>
     )
 }
+
+CartTotal.propTypes = {
+    cartTotal: PropTypes.number.isRequired
+}
+
+ListingCartItem.propTypes = {
+    item: PropTypes.shape({
+            quantity: PropTypes.number.isRequired,
+            listing: PropTypes.shape({
+                        title: PropTypes.string.isRequired,
+                        price: PropTypes.number.isRequired,
+                        imageUrl: PropTypes.string.isRequired
+            }).isRequired
+    }).isRequired,
+    onClick: PropTypes.func.isRequired
+  }

@@ -2,16 +2,25 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useAuth } from "domains/auth";
 
-const getCartListings = (token) =>
+const getCartListings = (auth) =>
     fetch("https://ecomm-service.herokuapp.com/marketplace/cart/items", {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${auth.accessToken}`,
             accept: "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => {
+        if (res.ok) {
+            return res.json();
+            }
+            throw new Error(res.statusText);
+    }).catch((err) =>{
+        console.log(err);
+        auth.logout();
 
-const postCartListings = (listingId, token) => 
+    });
+
+const postCartListings = (listingId, auth) => 
     fetch("https://ecomm-service.herokuapp.com/marketplace/cart/items", {
         method: "POST",
         body: JSON.stringify({
@@ -21,29 +30,35 @@ const postCartListings = (listingId, token) =>
         headers: {
         accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth.accessToken}`,
         },
     }).then((res) => {
         if (res.ok) {
         return res.json();
         }
         throw new Error(res.statusText);
-    });
+    }).catch((err) =>{
+        console.log(err);
+        auth.logout();
+    });;
 
-const deleteCartListings = (listingId, token) => 
+const deleteCartListings = (listingId, auth) => 
     fetch(`https://ecomm-service.herokuapp.com/marketplace/cart/items/${listingId}`, {
         method: "DELETE",
         headers: {
         accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth.accessToken}`,
         },
     }).then((res) => {
         if (res.ok) {
         return res.json();
         }
         throw new Error(res.statusText);
-    });
+    }).catch((err) =>{
+        console.log(err);
+        auth.logout();
+    });;
 
 export const useCartListings = () => {
   const [cartListings, setCartListings] = React.useState([]);
@@ -68,26 +83,26 @@ export const useCartListings = () => {
 
   }
 
-  const loadCartListings = (token) =>
-    getCartListings(token)
+  const loadCartListings = (auth) =>
+    getCartListings(auth)
         .then((data) => setCartListings(data));
 
-  const addCartItem = (listingId, token) => {
-    postCartListings(listingId, token)
-    .then(()=>loadCartListings(token));
+  const addCartItem = (listingId, auth) => {
+    postCartListings(listingId, auth)
+    .then(()=>loadCartListings(auth));
   }
 
-  const removeCartItem = (listingId, token) =>{
-    deleteCartListings(listingId, token)
+  const removeCartItem = (listingId, auth) =>{
+    deleteCartListings(listingId, auth)
         .then(()=>{
-            loadCartListings(token);
+            loadCartListings(auth);
         });
   }
 
   useEffect(() => {
       console.log("[DEBUG] useEffect @ use-cartlisting.js: loadCartLisings()");
-      (auth.status === "authenticated") && loadCartListings(auth.accessToken);
-  }, [auth.status]);
+      (auth.status === "authenticated") && loadCartListings(auth);
+  }, [auth]);
 
   useEffect(() => {
       console.log("[DEBUG] useEffect @ use-cartlisting.js: calcualteTotal()");
@@ -95,7 +110,7 @@ export const useCartListings = () => {
       return () => {
         setCartTotal();
       };
-  }, [auth.status, cartListings]);
+  }, [auth, cartListings]);
 
   return {
     cartListings,

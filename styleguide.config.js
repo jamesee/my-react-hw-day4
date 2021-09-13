@@ -10,6 +10,10 @@ const path = require("path");
  */
 module.exports = {
   require: [path.resolve(__dirname, "src/index.css")],
+  components: [
+    path.resolve(__dirname,'src/domains/marketplace/components/**/*.jsx'), 
+    path.resolve(__dirname,'src/components/**/*.jsx')
+],
   webpackConfig:
     process.env.NODE_ENV === "production"
       ? createWebpackProdConfig(cracoConfig)

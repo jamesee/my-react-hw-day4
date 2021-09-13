@@ -10,6 +10,8 @@ export const MarketplacePublic = () => {
   const auth = useAuth();
   const {cartListings, addCartItem, removeCartItem, cartTotal} = useCartListings();
 
+  console.log(auth);
+
   return (
     <React.Fragment>
       {
@@ -96,7 +98,7 @@ export const MarketplacePublic = () => {
                       price={item.price}
                       availableStock={item.numOfStock}
                       onlyOne={item.availability === "single-item"}
-                      onAddToCart={() => addCartItem(item._id, auth.accessToken)}
+                      onAddToCart={() => addCartItem(item._id, auth)}
                       key={item._id}
                     />
                   ))}
@@ -133,17 +135,16 @@ export const MarketplacePublic = () => {
                 cartListings.map((cartItem) => (
                   <ListingCartItem 
                   item={cartItem} 
-                  onClick={()=>removeCartItem(cartItem.listing._id, auth.accessToken)}
+                  onClick={()=>removeCartItem(cartItem.listing._id, auth)}
                   key={cartItem._id}
                    />
                 ))
                 }
                 {
-                  cartListings  && cartTotal  &&
-                    <CartTotal cartTotal={cartTotal} />
+                  (cartListings.length !== 0 )  && <CartTotal cartTotal={cartTotal} />
                 } 
                 {
-                  (!cartTotal) && <CartEmpty />
+                  (cartListings.length === 0) && <CartEmpty />
                 }
             </div>
           </div> 
