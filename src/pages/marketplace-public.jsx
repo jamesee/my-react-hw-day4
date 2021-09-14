@@ -8,9 +8,9 @@ import { Button } from "components/button";
 export const MarketplacePublic = () => {
   const { page, setPage, listings } = useListings();
   const auth = useAuth();
-  const {cartListings, addCartItem, removeCartItem, cartTotal} = useCartListings();
+  const {cartListings, addCartItem, removeCartItem, cartTotal, isLoading} = useCartListings();
 
-  console.log(auth);
+  // console.log(auth);
 
   return (
     <React.Fragment>
@@ -89,7 +89,7 @@ export const MarketplacePublic = () => {
                           xl:grid-cols-3 xl:gap-x-6
               ">
                 {/*  =============== product li start ============  */}
-                {listings &&
+                {listings && 
                   listings.map((item) => (
                     <ListingItem
                       imageUrl={item.imageUrl}
@@ -131,21 +131,25 @@ export const MarketplacePublic = () => {
               </div>
               {/*  end of shopping cart header  */}
               {
-                cartListings && 
+                cartListings && !isLoading &&
                 cartListings.map((cartItem) => (
                   <ListingCartItem 
-                  item={cartItem} 
-                  onClick={()=>removeCartItem(cartItem.listing._id, auth)}
-                  key={cartItem._id}
+                      item={cartItem} 
+                      onClick={()=>removeCartItem(cartItem.listing._id, auth)}
+                      key={cartItem._id}
                    />
                 ))
                 }
                 {
-                  (cartListings.length !== 0 )  && <CartTotal cartTotal={cartTotal} />
+                  (cartListings.length !== 0 && !isLoading)  && <CartTotal cartTotal={cartTotal} />
                 } 
                 {
-                  (cartListings.length === 0) && <CartEmpty />
+                  (cartListings.length === 0 && !isLoading) && <CartEmpty />
                 }
+                {
+                  isLoading && <h3 className="text-center text-pink-700 mt-10">Updating your cart...</h3>
+                }
+                        
             </div>
           </div> 
           {/*  =============== Shopping Cart end ============  */}
