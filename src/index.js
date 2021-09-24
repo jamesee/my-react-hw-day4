@@ -2,11 +2,11 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AuthProvider } from "./domains/auth";
 import "./index.css";
-import { MarketplacePublic } from "./pages/marketplace-public";
+import { Gallery } from "./pages/gallery";
 
 ReactDOM.render(
   <AuthProvider>
-    <MarketplacePublic />
+    <Gallery />
   </AuthProvider>,
   document.querySelector("#root")
 );
