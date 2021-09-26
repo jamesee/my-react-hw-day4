@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect} from 'react';
 
 export const CollectionsContext = createContext({
   collections: [],
@@ -9,7 +9,14 @@ export const CollectionsContext = createContext({
 });
 
 export function CollectionsContextProvider(props) {
-  const [userCollections, setUserCollections] = useState([]);
+  const [userCollections, setUserCollections] = useState(()=>{
+    const localData = localStorage.getItem("collections");
+    return localData? JSON.parse(localData): [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("collections", JSON.stringify(userCollections))
+  }, [userCollections])
 
   function addCollectionHandler (collection) {
     // console.log(`[DEBUG] addCollection`)

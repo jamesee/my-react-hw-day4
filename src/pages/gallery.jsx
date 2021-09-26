@@ -4,7 +4,7 @@ import { Button } from "components/button";
 import { GalleryItem, ImageSearch } from "domains/gallery";
 
 export const Gallery = () => {
-  const { page, setPage, isLoading, setQueryTerm, galleryListings } = useGalleryListings();
+  const { pagination, setPagination, isLoading, setQueryTerm, galleryListings } = useGalleryListings();
 
 
   return (
@@ -37,14 +37,46 @@ export const Gallery = () => {
                       rounded-2xl
                       focus:ring-pink-900
                       m-2
+                      my-5
                     "
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
+              disabled={pagination.page === 1}
+              onClick={() => setPagination({...pagination, page: parseInt(pagination.page-1)})}
             >
               Prev
             </Button>
 
-            <ImageSearch searchText={(text) => { if (text) setQueryTerm(text) }} />
+            <div className="flex justify-center">
+
+            {/* <ImageSearch searchText={(text) => { if (text) setQueryTerm(text) }} /> */}
+            <ImageSearch 
+                pagination={pagination}
+                setPagination={setPagination}
+                searchText={(queryTerm) => { if (queryTerm) setQueryTerm(queryTerm) }} />
+            
+            <Button
+              type="button"
+              className="
+                      w-30 h-10
+                      bg-transparent 
+                      hover:bg-pink-600 
+                      text-pink-700 
+                      font-semibold 
+                      hover:text-white 
+                      py-2 
+                      border 
+                      border-pink-600 
+                      hover:border-transparent 
+                      rounded-2xl
+                      focus:ring-pink-900
+                      mx-2
+                      my-5
+                    "
+              onClick={() => {setPagination({...pagination, page: parseInt(Math.random() * 1000)})}}
+            >
+              RANDOM
+            </Button>
+            </div>
+
 
             <Button
               type="button"
@@ -62,8 +94,9 @@ export const Gallery = () => {
                       rounded-2xl
                       focus:ring-pink-900
                       m-2
+                      my-5
                     "
-              onClick={() => setPage(page + 1)}
+              onClick={() => setPagination({...pagination, page: parseInt(pagination.page+1)})}
             >
               Next
             </Button>

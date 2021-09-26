@@ -30,7 +30,7 @@ export const GalleryItem = (props) => {
         photographer_url: photographerUrl
       });
     }
-    console.log(collectionsCtx);
+    // console.log(collectionsCtx);
   }
 
   return (
@@ -62,7 +62,7 @@ export const GalleryItem = (props) => {
           />
         </div>
         <div
-          className="px-8 py-10 rounded-lg relative z-10 w-full bg-indigo-500 opacity-0 hover:opacity-100"
+          className="px-8 py-10 rounded-lg relative z-10 w-full h-80 bg-indigo-500 opacity-0 hover:opacity-100"
         >
 
           <div className="flex justify-evenly">

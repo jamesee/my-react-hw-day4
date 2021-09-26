@@ -1,24 +1,13 @@
 import * as React from "react";
-import { useEffect } from "react";
-
-// const options = {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//       "User-Agent": "Pexels/JavaScript",
-//       Authorization: "563492ad6f9170000100000116c183775efb4c00bb2c03ca473bb6d4",
-//     },
-//   };
 
 const getGalleryListings = (page, queryTerm, signal) =>
-    fetch(`https://api.pexels.com/v1/search?page=${page}&per_page=3&query=${queryTerm}`, {
+    fetch(`https://api.pexels.com/v1/search?page=${page}&per_page=${process.env.REACT_APP_PER_PAGE}&query=${queryTerm}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           "User-Agent": "Pexels/JavaScript",
-          Authorization: "563492ad6f9170000100000116c183775efb4c00bb2c03ca473bb6d4",
+          Authorization: process.env.REACT_APP_API_KEY,
         },
         signal
       })
@@ -34,33 +23,48 @@ const getGalleryListings = (page, queryTerm, signal) =>
 export const useGalleryListings = () => {
     const [galleryListings, setGalleryListings] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false)
-    const [page, setPage] = React.useState(1)
-    const [queryTerm, setQueryTerm] = React.useState("sea")
+
+    const [pagination, setPagination] = React.useState(()=>{
+        let localPage = localStorage.getItem("page");
+        // console.log(`page : ${localPage}`)
+        return {page: (localPage !== null)? Number(localPage) : Number(1) };
+    })
+
+    // console.log(pagination)
+    const [queryTerm, setQueryTerm] = React.useState(()=>{
+        let localQueryTerm = localStorage.getItem("queryTerm");
+        // console.log(`localQueryTerm : ${localQueryTerm}`)
+        return (localQueryTerm !== null)? localQueryTerm : "nature";
+    })
 
     const loadGalleryListings = (page,queryTerm,signal) => {
         setIsLoading(true);
+        localStorage.setItem('page', Number(pagination.page))
+        localStorage.setItem('queryTerm', queryTerm)
         getGalleryListings(page,queryTerm, signal)
             .then((data) => {
                 if (data){
-                    setPage(Number(data.page))
-                    setGalleryListings(data.photos);
+                    const {page, per_page, total_results, photos} = data
+                    setPagination({page, per_page, total_results})
+                    setGalleryListings(photos);
                 }
                 setIsLoading(false);
             });
     }
  
-    useEffect(() => {
+    React.useEffect(() => {
         const ab = new AbortController();
-        loadGalleryListings(page, queryTerm, ab.signal);
+        loadGalleryListings(pagination.page, queryTerm, ab.signal);
         return () => {
             ab.abort();
           };
-    }, [page, queryTerm]);
+        // eslint-disable-next-line
+    }, [pagination.page, queryTerm]);
 
     return {
         galleryListings,
-        page, 
-        setPage,
+        pagination, 
+        setPagination,
         queryTerm, 
         setQueryTerm,
         isLoading

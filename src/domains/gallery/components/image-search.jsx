@@ -2,20 +2,35 @@ import { useState } from 'react';
 import { Button } from 'components/button';
 import { SearchIcon } from "@heroicons/react/outline";
 
-export const ImageSearch = ({ searchText }) => {
-  const [text, setText] = useState('');
+export const ImageSearch = (props) => {
+  const [text,setText] = useState('');
+  const { pagination, setPagination, searchText} = props;
 
   const onSubmit = (e) => {
     e.preventDefault();
-    searchText(text);
+    localStorage.setItem("queryTerm", text)
+    setPagination({...pagination, page:1})
+    searchText(text? text: localStorage.getItem("queryTerm"));
   }
 
   return (
     <div className='max-w-md rounded'>
       <form onSubmit={onSubmit} className="w-full max-w-sm">
         <div className="flex items-center py-2">
-          <input onChange={e => setText(e.target.value)} className="w-150 h-10 appearance-none bg-transparent border-pink-500 w-full text-gray-700 m-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Search Image Term..." />
-
+          <input 
+          onChange={e => setText(e.target.value)} 
+          className="w-150 h-10 
+                    appearance-none 
+                    bg-transparent 
+                    border-pink-500 
+                    w-full 
+                    text-gray-700 
+                    m-3 
+                    py-1 px-2 
+                    leading-tight 
+                    focus:outline-none" 
+                    type="text" 
+                    placeholder={localStorage.getItem("queryTerm") !== null ? localStorage.getItem("queryTerm"): "Search Image Term..."} />
           <Button
                 type="button"
                 className="
