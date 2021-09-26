@@ -1,12 +1,15 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { AuthProvider } from "./domains/auth";
 import "./index.css";
-import { Gallery } from "./pages/gallery";
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import { CollectionsContextProvider } from './domains/gallery';
 
 ReactDOM.render(
-  <AuthProvider>
-    <Gallery />
-  </AuthProvider>,
+  <CollectionsContextProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </CollectionsContextProvider>,
   document.querySelector("#root")
 );
