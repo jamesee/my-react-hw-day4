@@ -14,7 +14,7 @@ export const ImageSearch = ({ searchText }) => {
     <div className='max-w-md rounded'>
       <form onSubmit={onSubmit} className="w-full max-w-sm">
         <div className="flex items-center py-2">
-          <input onChange={e => setText(e.target.value)} className="w-80 h-10 appearance-none bg-transparent border-pink-500 w-full text-gray-700 m-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Search Image Term..." />
+          <input onChange={e => setText(e.target.value)} className="w-150 h-10 appearance-none bg-transparent border-pink-500 w-full text-gray-700 m-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Search Image Term..." />
 
           <Button
                 type="button"
