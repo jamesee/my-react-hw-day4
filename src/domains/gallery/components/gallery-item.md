@@ -1,5 +1,5 @@
 ```jsx
-const demo = () => {
+const Demo = () => {
   const galleryListings = [
     {
       id: 15286,
@@ -87,30 +87,23 @@ const demo = () => {
   ];
 
   return (
-    <div
-      className="
-                          grid
-                          md:grid-cols-2
-                          gap-x-4 gap-y-8
-                          xl:grid-cols-3 xl:gap-x-6
-              "
-    >
-      galleryListings.map((item) => (
-      <GalleryItem
-        imageId={item.id}
-        imageHeight={item.height}
-        imageWidth={item.width}
-        imageUrl={item.src.large}
-        photographer={item.photographer}
-        photographerUrl={item.photographer_url}
-        key={item.id}
-      />
+    <div className="grid md:grid-cols-2 gap-x-4 gap-y-8 xl:grid-cols-3 xl:gap-x-6">
+    { galleryListings.map((item) => (
+            <GalleryItem
+              imageId={item.id}
+              imageHeight={item.height}
+              imageWidth={item.width}
+              imageUrl={item.src.large}
+              photographer={item.photographer}
+              photographerUrl={item.photographer_url}
+              key={item.id}
+            />
       ))
+    }
     </div>
   );
 };
 
-demo();
+<Demo />
 ```
 
-Use render to render element other than `button`, e.g. `<a>` tag.

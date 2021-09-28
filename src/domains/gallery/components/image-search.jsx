@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from "prop-types";
 import { Button } from 'components/button';
 import { SearchIcon } from "@heroicons/react/outline";
 
@@ -60,3 +61,9 @@ export const ImageSearch = (props) => {
   )
 }
 
+
+ImageSearch.propTypes = {
+  pagination: PropTypes.object.isRequired,
+  setPagination: PropTypes.func.isRequired,
+  searchText: PropTypes.func.isRequired,
+};

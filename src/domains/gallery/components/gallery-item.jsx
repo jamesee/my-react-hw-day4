@@ -1,12 +1,12 @@
+import * as React from "react";
+import PropTypes from "prop-types";
+import { useContext } from "react";
 import {
   ThumbUpIcon,
   ThumbDownIcon
 } from "@heroicons/react/solid";
 import { Button } from "components/button";
-import PropTypes from "prop-types";
-import * as React from "react";
-import { useContext } from "react";
-import { CollectionsContext } from '../../gallery';
+import { CollectionsContext } from 'domains/gallery/store/collections-context';
 
 
 export const GalleryItem = (props) => {
@@ -115,7 +115,7 @@ export const GalleryItem = (props) => {
 
 GalleryItem.propTypes = {
   imageId: PropTypes.number.isRequired,
-  imageHeight: PropTypes.string.isRequired,
+  imageHeight: PropTypes.number.isRequired,
   imageWidth: PropTypes.number.isRequired,
   imageUrl: PropTypes.string.isRequired,
   photographerUrl: PropTypes.string.isRequired,

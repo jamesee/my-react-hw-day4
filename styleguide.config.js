@@ -11,8 +11,8 @@ const path = require("path");
 module.exports = {
   require: [path.resolve(__dirname, "src/index.css")],
   components: [
-    'src/domains/gallery/components/**/*.jsx', 
-    'src/components/**/*.jsx'
+    'src/components/**/*.jsx',
+    'src/domains/gallery/components/**/*.jsx',
   ],
   webpackConfig:
     process.env.NODE_ENV === "production"
