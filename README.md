@@ -47,3 +47,8 @@ The documentation of the Pexel.com API is at the following URL:
 * https://www.pexels.com/api/documentation/
 
 
+
+# References:
+* [Tailwind CSS Tutorial - Net Ninja](https://youtu.be/vqKie-xmcFs)
+* [React Context & Hooks Tutorial - by Net Ninja](https://youtu.be/SOnMln3W0U8)
+* [React Crash Course for Beginners 2021 - by Academind](https://youtu.be/Dorf8i6lCuk)
