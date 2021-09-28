@@ -8,7 +8,11 @@ export const ImageSearch = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    setText((text !== "")? text: "nature");
+
     localStorage.setItem("queryTerm", text)
+
     setPagination({...pagination, page:1})
     searchText(text? text: localStorage.getItem("queryTerm"));
   }

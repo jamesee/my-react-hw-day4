@@ -34,7 +34,7 @@ export const useGalleryListings = () => {
     const [queryTerm, setQueryTerm] = React.useState(()=>{
         let localQueryTerm = localStorage.getItem("queryTerm");
         // console.log(`localQueryTerm : ${localQueryTerm}`)
-        return (localQueryTerm !== null)? localQueryTerm : "nature";
+        return (localQueryTerm === null || localQueryTerm ==="" )? "nature": localQueryTerm;
     })
 
     const loadGalleryListings = (page,queryTerm,signal) => {
