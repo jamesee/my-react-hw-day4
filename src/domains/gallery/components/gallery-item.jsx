@@ -3,7 +3,7 @@ import {
   ThumbDownIcon
 } from "@heroicons/react/solid";
 import { Button } from "components/button";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import * as React from "react";
 import { useContext } from "react";
 import { CollectionsContext } from '../../gallery';
@@ -112,14 +112,12 @@ export const GalleryItem = (props) => {
   );
 };
 
-  // ListingItem.propTypes = {
-  //   title: PropTypes.string.isRequired,
-  //   description: PropTypes.string.isRequired,
-  //   price: PropTypes.number.isRequired,
-  //   imageUrl: PropTypes.string,
-  //   /**
-  //    * Required if `onlyOne` is `false`.
-  //    */
-  //   availableStock: PropTypes.number,
-  //   onlyOne: PropTypes.bool,
-  // };
+
+GalleryItem.propTypes = {
+  imageId: PropTypes.number.isRequired,
+  imageHeight: PropTypes.string.isRequired,
+  imageWidth: PropTypes.number.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  photographerUrl: PropTypes.string.isRequired,
+  photographer: PropTypes.string.isRequired,
+};

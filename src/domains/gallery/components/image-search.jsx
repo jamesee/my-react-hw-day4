@@ -22,6 +22,7 @@ export const ImageSearch = (props) => {
       <form onSubmit={onSubmit} className="w-full max-w-sm">
         <div className="flex items-center py-2">
           <input 
+          required
           onChange={e => setText(e.target.value)} 
           className="w-150 h-10 
                     appearance-none 
