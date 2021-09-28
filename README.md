@@ -1,10 +1,49 @@
-# React Homework Day3
+# End-of-Module Final Project for "Frontend Developement" course at Singapore University of Technology and Design
+Submitted by : James Ee
 
-Please see [Homework Day3](images/react-hw-day3.png)
+# Project Description
+This is the end-of-module final project for our learning of backend Dev at SUTD. Please see project [requirements](images/project-requirements.pdf).
 
-The sites has been successfully deployed at :
 
-https://jamesee-react-hw-day3.netlify.app/
+# Project Setup
 
-https://jamesee-react-hw-day3-styleguide.netlify.app/
+## Installation
+
+```bash
+$ npm install
+```
+## Usage
+
+### Start server
+```bash
+# for development
+$ npm run start
+
+# for production
+$ npm run start
+
+# to start styleguidist server
+$ npm run start:styleguide
+
+# to build styleguidist output at "styleguide" folders
+$ npm run start:styleguide
+```
+
+# Netlify Deployment
+
+The frontend-capstone and its styleguide are deployed at the following URL:
+
+Frontend-capstone
+* https://jamesee-fe-capstone.netlify.app
+
+Frontend-capstone styleguide
+* https://jamesee-fecapstone-styleguide.netlify.app
+
+
+# The Pexels API
+
+The documentation of the Pexel.com API is at the following URL:
+
+* https://www.pexels.com/api/documentation/
+
 
