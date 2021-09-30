@@ -1,13 +1,26 @@
 import { useGalleryListings } from "domains/gallery";
+import { LoginForm, useAuth} from "domains/auth";
 import * as React from "react";
 import { Button } from "components/button";
-import { GalleryItem, ImageSearch } from "domains/gallery";
+import { GalleryItem} from "domains/gallery";
 
 export const Gallery = () => {
-  const { pagination, setPagination, isLoading, setQueryTerm, galleryListings } = useGalleryListings();
-
+  const { page, setPage, isLoading, galleryListings } = useGalleryListings();
+  const auth = useAuth();
 
   return (
+
+    <>
+      {
+        auth.status === "anonymous" &&
+        <main className="bg-gray-50 p-6 sm:p-12 min-h-screen">
+          <div className="max-w-7xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+            <LoginForm />
+          </div>
+        </main>
+      }
+      {
+      auth.status === "authenticated" &&
 
     <main className="bg-gray-50 lg:flex">
 
@@ -15,7 +28,7 @@ export const Gallery = () => {
         <div className="max-w-7xl mx-auto pt-10 pb-24 px-4 sm:px-6 lg:px-8">
           <div className="sm:flex sm:flex-col sm:align-center">
             <h1 className="text-5xl font-extrabold text-pink-700 sm:text-center">
-              Image Gallery
+              Movies Gallery
             </h1>
           </div>
 
@@ -39,43 +52,13 @@ export const Gallery = () => {
                       m-2
                       my-5
                     "
-              disabled={pagination.page === 1}
-              onClick={() => setPagination({...pagination, page: parseInt(pagination.page-1)})}
+              disabled={page === 1}
+              onClick={() => setPage(()=> parseInt(page-1))}
             >
               Prev
             </Button>
 
-            <div className="flex justify-center">
 
-            {/* <ImageSearch searchText={(text) => { if (text) setQueryTerm(text) }} /> */}
-            <ImageSearch 
-                pagination={pagination}
-                setPagination={setPagination}
-                searchText={(queryTerm) => { if (queryTerm) setQueryTerm(queryTerm) }} />
-            
-            <Button
-              type="button"
-              className="
-                      w-30 h-10
-                      bg-transparent 
-                      hover:bg-pink-600 
-                      text-pink-700 
-                      font-semibold 
-                      hover:text-white 
-                      py-2 
-                      border 
-                      border-pink-600 
-                      hover:border-transparent 
-                      rounded-2xl
-                      focus:ring-pink-900
-                      mx-2
-                      my-5
-                    "
-              onClick={() => {setPagination({...pagination, page: parseInt(Math.random() * 1000)})}}
-            >
-              RANDOM
-            </Button>
-            </div>
 
 
             <Button
@@ -96,7 +79,7 @@ export const Gallery = () => {
                       m-2
                       my-5
                     "
-              onClick={() => setPagination({...pagination, page: parseInt(pagination.page+1)})}
+              onClick={() => setPage(()=> parseInt(page+1))}
             >
               Next
             </Button>
@@ -112,13 +95,14 @@ export const Gallery = () => {
             {galleryListings && !isLoading &&
               galleryListings.map((item) => (
                 <GalleryItem
-                  imageId={item.id}
-                  imageHeight={item.height}
-                  imageWidth={item.width}
-                  imageUrl={item.src.large}
-                  photographer={item.photographer}
-                  photographerUrl={item.photographer_url}
-                  key={item.id}
+                      _id={item._id}
+                      releaseDate={item.releaseDate}
+                      adult={item.adult}
+                      backdropUrl={item.backdropUrl}
+                      posterUrl={item.posterUrl}
+                      title={item.title}
+                      overview={item.overview}
+                      key={item._id}
                 />
               ))
             }
@@ -137,6 +121,8 @@ export const Gallery = () => {
 
 
     </main>
+  }
 
+</>
   );
 };

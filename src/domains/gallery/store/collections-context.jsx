@@ -28,13 +28,13 @@ export function CollectionsContextProvider(props) {
   function removeCollectionHandler (id) {
     // console.log(`[DEBUG] removeCollection`)
     setUserCollections(prevUserCollections => {
-      return prevUserCollections.filter(collection => collection.id !== id);
+      return prevUserCollections.filter(collection => collection._id !== id);
     });
   }
 
   function itemIsCollectionHandler (id) {
     // console.log(`[DEBUG] itemIsCollection`)
-    return userCollections.some(collection => collection.id === id);
+    return userCollections.some(collection => collection._id === id);
   }
 
   const context = {

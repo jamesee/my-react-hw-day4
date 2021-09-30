@@ -2,7 +2,10 @@ import { useContext } from 'react';
 import { GalleryItem } from "domains/gallery";
 
 
+
 import { CollectionsContext } from '../domains/gallery';
+
+
 
 export const CollectionsPage = () => {
   const collectionsCtx = useContext(CollectionsContext);
@@ -36,13 +39,14 @@ export const CollectionsPage = () => {
                 :
                 collectionsCtx.collections.map((item) => (
                   <GalleryItem
-                    imageId={item.id}
-                    imageHeight={item.height}
-                    imageWidth={item.width}
-                    imageUrl={item.src.large}
-                    photographer={item.photographer}
-                    photographerUrl={item.photographer_url}
-                    key={item.id}
+                      _id={item._id}
+                      releaseDate={item.releaseDate}
+                      adult={item.adult}
+                      backdropUrl={item.backdropUrl}
+                      posterUrl={item.posterUrl}
+                      title={item.title}
+                      overview={item.overview}
+                      key={item._id}
                   />
                 ))
             }

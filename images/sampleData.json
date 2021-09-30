@@ -1,0 +1,46 @@
+const commentData = [
+    {
+      "_id": "615588db1aa5950020b453c0",
+      "rating": 5,
+      "content": "Test comment3",
+      "movie": "61547ee9465aaf0020be8cae",
+      "userId": "615588811aa5950020b4523b",
+      "userName": "James Ee",
+      "createdAt": "2021-09-30T09:52:27.766Z",
+      "updatedAt": "2021-09-30T09:52:27.766Z",
+      "__v": 0
+    },
+    {
+      "_id": "615588d61aa5950020b453be",
+      "rating": 5,
+      "content": "Test comment3",
+      "movie": "61547ee9465aaf0020be8cae",
+      "userId": "615588811aa5950020b4523b",
+      "userName": "James Ee",
+      "createdAt": "2021-09-30T09:52:22.032Z",
+      "updatedAt": "2021-09-30T09:52:22.032Z",
+      "__v": 0
+    },
+    {
+      "_id": "615588cf1aa5950020b453bb",
+      "rating": 5,
+      "content": "Test comment2",
+      "movie": "61547ee9465aaf0020be8cae",
+      "userId": "615588811aa5950020b4523b",
+      "userName": "James Ee",
+      "createdAt": "2021-09-30T09:52:15.479Z",
+      "updatedAt": "2021-09-30T09:52:15.479Z",
+      "__v": 0
+    },
+    {
+      "_id": "615588c41aa5950020b453b9",
+      "rating": 5,
+      "content": "Test comment1",
+      "movie": "61547ee9465aaf0020be8cae",
+      "userId": "615588811aa5950020b4523b",
+      "userName": "James Ee",
+      "createdAt": "2021-09-30T09:52:04.827Z",
+      "updatedAt": "2021-09-30T09:52:04.827Z",
+      "__v": 0
+    }
+]

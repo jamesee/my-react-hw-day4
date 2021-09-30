@@ -1,6 +1,7 @@
 import * as React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { useContext } from "react";
+import { Link } from 'react-router-dom';
 import {
   ThumbUpIcon,
   ThumbDownIcon
@@ -11,24 +12,17 @@ import { CollectionsContext } from 'domains/gallery/store/collections-context';
 
 export const GalleryItem = (props) => {
 
-  const { imageId, imageHeight, imageWidth, imageUrl, photographerUrl, photographer } = props;
+  const { _id, releaseDate, adult, backdropUrl, posterUrl, title, overview } = props;
   const collectionsCtx = useContext(CollectionsContext);
-  const itemIsCollection = collectionsCtx.itemIsCollection(imageId);
+  const itemIsCollection = collectionsCtx.itemIsCollection(_id);
+  
+  // console.log(`id: ${_id}, itemIsCollection: ${itemIsCollection}`)
 
   const toggleCollectionStatusHandler = () => {
     if (itemIsCollection) {
-      collectionsCtx.removeCollection(imageId);
+      collectionsCtx.removeCollection(_id);
     } else {
-      collectionsCtx.addCollection({
-        id: imageId,
-        height: imageHeight,
-        width: imageWidth,
-        src: {
-          large: imageUrl
-        },
-        photographer:photographer,
-        photographer_url: photographerUrl
-      });
+      collectionsCtx.addCollection({_id, releaseDate, adult, backdropUrl, posterUrl, title, overview});
     }
     // console.log(collectionsCtx);
   }
@@ -56,7 +50,7 @@ export const GalleryItem = (props) => {
                       "
         >
           <img
-            src={imageUrl}
+            src={backdropUrl}
             alt=""
             className="object-cover pointer-events-none group-hover:opacity-75 w-full h-80 overflow-hidden"
           />
@@ -66,35 +60,14 @@ export const GalleryItem = (props) => {
         >
 
           <div className="flex justify-evenly">
-            <div>
-              <table className="table-auto leading-relaxed text-white">
-                <thead>
-                  <tr>
-                    <th className="text-right px-3">Photographer:</th>
-                    <th className="text-left px-3">{photographer}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="text-right px-3">ID:</td>
-                    <td className="text-left px-3">{imageId}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-right px-3">Height:</td>
-                    <td className="text-left px-3">{imageHeight}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-right px-3">Width:</td>
-                    <td className="text-left px-3">{imageWidth}</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div>
+              <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-indigo-500 opacity-90">
+                <h1 className="title-font text-lg font-bold text-white hover:text-indigo-100 mb-3">{title}</h1>
+              </div>
             </div>
           </div>
-          <div className="flex justify-center mt-2">
-            <a href={photographerUrl} className="underline text-center leading-relaxed text-white">
-              Visit photographer's website
-            </a>
+          <div className="flex justify-center mt-6">
+            <Link  className="underline text-center leading-relaxed text-white" to={`/movie/${_id}` }>View movie detials</Link>
           </div>
 
           <div className="flex flex-col md:flex-row justify-center gap-3 mt-5 py-1">
@@ -113,11 +86,11 @@ export const GalleryItem = (props) => {
 };
 
 
-GalleryItem.propTypes = {
-  imageId: PropTypes.number.isRequired,
-  imageHeight: PropTypes.number.isRequired,
-  imageWidth: PropTypes.number.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  photographerUrl: PropTypes.string.isRequired,
-  photographer: PropTypes.string.isRequired,
-};
+// GalleryItem.propTypes = {
+//   imageId: PropTypes.number.isRequired,
+//   imageHeight: PropTypes.number.isRequired,
+//   imageWidth: PropTypes.number.isRequired,
+//   imageUrl: PropTypes.string.isRequired,
+//   photographerUrl: PropTypes.string.isRequired,
+//   photographer: PropTypes.string.isRequired,
+// };
