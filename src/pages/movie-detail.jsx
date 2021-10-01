@@ -87,7 +87,7 @@ export const MoviesDetail = () => {
                     xl:grid-cols-6 xl:gap-x-4
                     m-2
                   ">
-                    <div class=" col-span-2 w-full h-full rounded bg-white border-gray-200 shadow-md overflow-hidden">
+                    <div className=" col-span-2 w-full h-full rounded bg-white border-gray-200 shadow-md overflow-hidden">
 
                         <div className=" w-full">
                             <img src={movie.posterUrl} alt={movie.title} />
@@ -100,8 +100,8 @@ export const MoviesDetail = () => {
 
 
 
-                        <div class="max-w-6xl mx-auto px-3 py-1 space-y-3">
-                            <div class="flex  md:flex-row gap-3">
+                        <div className="max-w-6xl mx-auto px-3 py-1 space-y-3">
+                            <div className="flex  md:flex-row gap-3">
 
                                 <div className="w-1/2 flex-none">
 

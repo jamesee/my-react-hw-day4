@@ -58,9 +58,9 @@ const RatingStars = (props) => {
 
     <div className="flex justify-start items-center">
       <div className="flex items-center mt-1 mb-4">
-        {starItems.map(classEl => {
+        {starItems.map((el,idx) => {
           return (
-            <svg className={classEl} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <svg className={el} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" key={idx}>
               <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
             </svg>
           )
@@ -94,7 +94,7 @@ const CommentItemTitle = (props) => {
     <div className="text-sm leading-5 font-normal text-pink-600 overflow-clip">
       {props.content}
       <div>
-        <RatingStars rating={props.rating} maxStars={5} />
+        <RatingStars rating={props.rating} maxStars={5}/>
       </div>
 
     </div>
@@ -103,10 +103,10 @@ const CommentItemTitle = (props) => {
 
 export function CommentItem(props) {
 
-  const { loginUserId, id, comment, onDelete } = props;
+  const { loginUserId, id, comment, onDelete} = props;
   const { rating, content, userId } = comment;
   return (
-    <li className="js-career-item">
+    <li className="js-career-item" >
       <div className="bg-white shadow overflow-hidden sm:rounded-md">
         <div className="p-2 flex items-center sm:px-6">
           <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
