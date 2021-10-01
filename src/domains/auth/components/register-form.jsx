@@ -1,40 +1,59 @@
 import { Button } from "components/button";
 import { TextField } from "components/text-field";
 import * as React from "react";
-import { useLogin } from "../auth.state";
-import { Link } from 'react-router-dom';
+import { useRegister } from "../auth.state";
+import { useHistory, Link } from "react-router-dom";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
+  const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [status, setStatus] = React.useState("idle");
-  const login = useLogin();
+  const register = useRegister();
+  const history = useHistory();
 
   return (
-    <div className="max-w-md mx-auto m-6 shadow">
+    <div className="max-w-md mx-auto m-10 shadow">
       <form
         onSubmit={(ev) => {
           ev.preventDefault();
           setStatus("loading");
-          login({ email, password }).catch(() => setStatus("error"));
+          register({name, email, password })
+          .then(()=>{
+            setStatus("idle")
+            history.push('/')
+          })
+          .catch((error) => {
+            setStatus("error")
+            });
         }}
         className="p-6"
       >
         {status === "error" && (
           <div className="p-2 text-red-800 bg-red-200 rounded-sm">
-            Fail to login.
+            Fail to register.
           </div>
         )}
         <div className="text-3xl mt-4 mb-8 font-extrabold text-center">
-          Login
+          Register
         </div>
         <div className="space-y-6">
+        `<TextField
+            label="Username"
+            value={name}
+            onChangeValue={setName}
+            name="name"
+            id="name"
+            autoFocus
+            required
+            disabled={status === "loading"}
+          />
           <TextField
             label="Email"
             value={email}
             onChangeValue={setEmail}
-            name="username"
-            id="username"
+            name="email"
+            id="email"
             autoFocus
             required
             disabled={status === "loading"}
@@ -55,12 +74,12 @@ export const LoginForm = () => {
             className="w-full"
             disabled={status === "loading"}
           >
-            Login
+            Register
           </Button>
         </div>
       </form>
       <div className="text-xl m-5  font-bold text-center">
-        <Link className="underline text-center text-md leading-relaxed text-pink-500" to={`/register` }>Register</Link>
+        <Link className="underline text-center text-md leading-relaxed text-pink-500" to={`/` }>Back to Homepage</Link>
       </div>
     </div>
   );

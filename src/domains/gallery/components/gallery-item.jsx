@@ -61,16 +61,16 @@ export const GalleryItem = (props) => {
 
           <div className="flex justify-evenly">
           <div>
-              <div className="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-indigo-500 opacity-90">
-                <h1 className="title-font text-lg font-bold text-white hover:text-indigo-100 mb-3">{title}</h1>
+              <div className="p-8 relative z-10 w-full border-4 border-gray-200 bg-indigo-500 opacity-90">
+                <h1 className="title-font text-lg font-bold text-white hover:text-indigo-100 ">{title}</h1>
               </div>
             </div>
           </div>
-          <div className="flex justify-center mt-6">
-            <Link  className="underline text-center leading-relaxed text-white" to={`/movie/${_id}` }>View movie detials</Link>
+          <div className="flex justify-center mt-2">
+            <Link  className="underline text-center text-xl leading-relaxed text-white" to={`/movie/${_id}` }>[  View movie details  ]</Link>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center gap-3 mt-5 py-1">
+          <div className="flex flex-col md:flex-row justify-center gap-1 mt-4 py-1">
 
             <Button variant="primary" onClick={toggleCollectionStatusHandler}>
               {itemIsCollection? <ThumbDownIcon className="h-4 w-4 mr-1.5" /> : <ThumbUpIcon className="h-4 w-4 mr-1.5" />}

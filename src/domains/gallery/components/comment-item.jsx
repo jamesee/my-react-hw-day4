@@ -5,7 +5,7 @@ const IconButton = (props) => (
     type="button"
     className="p-1 rounded-full hover:bg-gray-50 focus:outline-none focus:bg-gray-50 focus:ring focus:ring-pink-500 focus:ring-opacity-30 transition duration-150 ease-in-out"
     title={props.title}
-    onClick={()=>props.onClick(props.index)}
+    onClick={() => props.onClick(props.index)}
   >
     {props.children}
   </button>
@@ -14,7 +14,7 @@ const IconButton = (props) => (
 // eslint-disable-next-line
 const EditButton = (props) => {
   return (
-    <IconButton title="Edit" onClick={()=>props.onClick(props.index)} index={props.index} >
+    <IconButton title="Edit" onClick={() => props.onClick(props.index)} index={props.index} >
       <svg
         className="h-5 w-5 text-gray-400"
         fill="currentColor"
@@ -30,7 +30,7 @@ const EditButton = (props) => {
 const DeleteButton = (props) => {
 
   return (
-    <IconButton title="Delete" onClick={()=>props.onClick(props.id)} >
+    <IconButton title="Delete" onClick={() => props.onClick(props.id)} >
       <svg
         className="w-5 h-5 text-gray-400"
         fill="currentColor"
@@ -47,6 +47,29 @@ const DeleteButton = (props) => {
   );
 };
 
+const RatingStars = (props) => {
+  let starItems = [];
+
+  for (let i = 0; i < props.maxStars; i++) {
+    starItems.push((i < props.rating) ? 'mx-1 w-4 h-4 fill-current text-yellow-500' : 'mx-1 w-4 h-4 fill-current text-gray-300')
+  }
+
+  return (
+
+    <div className="flex justify-start items-center">
+      <div className="flex items-center mt-1 mb-4">
+        {starItems.map(classEl => {
+          return (
+            <svg className={classEl} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+            </svg>
+          )
+        })}
+      </div>
+    </div>
+
+  )
+}
 // eslint-disable-next-line
 const WorkingBagIcon = () => {
   return (
@@ -68,12 +91,10 @@ const WorkingBagIcon = () => {
 
 const CommentItemTitle = (props) => {
   return (
-    <div className="text-sm leading-5 font-medium text-pink-600 truncate">
+    <div className="text-sm leading-5 font-normal text-pink-600 overflow-clip">
       {props.content}
       <div>
-      <span className="ml-1 font-normal text-gray-500">
-        rating: {props.rating}
-      </span>
+        <RatingStars rating={props.rating} maxStars={5} />
       </div>
 
     </div>
@@ -83,19 +104,21 @@ const CommentItemTitle = (props) => {
 export function CommentItem(props) {
 
   const { loginUserId, id, comment, onDelete } = props;
-  const { rating, content, userId} = comment;
+  const { rating, content, userId } = comment;
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-md">
-      <div className="px-4 py-4 flex items-center sm:px-6">
-        <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-          <div>
-            <CommentItemTitle rating={rating} content={content} />
+    <li className="js-career-item">
+      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <div className="p-2 flex items-center sm:px-6">
+          <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <CommentItemTitle rating={rating} content={content} />
+            </div>
+          </div>
+          <div className="ml-5 flex-shrink-0 inline-flex items-center justify-center gap-2">
+            {userId === loginUserId ? <DeleteButton onClick={onDelete} id={id} /> : null}
           </div>
         </div>
-        <div className="ml-5 flex-shrink-0 inline-flex items-center justify-center gap-2">
-          {userId === loginUserId ? <DeleteButton onClick={onDelete} id={id} /> : null}
-        </div>
-      </div> 
-    </div>
+      </div>
+    </li >
   );
 }

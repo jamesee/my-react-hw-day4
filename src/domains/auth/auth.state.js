@@ -90,6 +90,42 @@ const login = (email, password) =>
     throw new Error(res.statusText);
   });
 
+  const register = (name, email, password) =>
+  fetch("https://ecomm-service.herokuapp.com/register", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name, email, password,
+      avatar: "http://github.com/malcolm-kee.png"
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    throw new Error(res.statusText);
+  });
+
+export const useRegister = () => {
+    const auth = React.useContext(AuthContext);
+    
+    if (!auth) {
+      throw new Error("Your application must be wrapped with AuthProvider");
+    }
+
+    const login = useLogin();
+
+    return function invokeRegister({ name, email, password }) {
+      return register(name, email, password).then((res) => {
+        login({email, password}).catch(err => console.log(err))
+        localStorage.setItem(ACCESS_TOKEN_STORAGE, res.access_token);
+      });
+    };
+  };
+
+
 export const useLogin = () => {
   const auth = React.useContext(AuthContext);
 
@@ -115,5 +151,6 @@ export const useLogout = () => {
   return () => {
     auth.logout();
     localStorage.removeItem(ACCESS_TOKEN_STORAGE);
+    localStorage.removeItem('page');
   };
 };

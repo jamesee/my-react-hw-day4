@@ -40,7 +40,7 @@ export const CommentForm = (props) => {
                 rounded-lg
                 divide-y divide-gray-200
               ">
-          <div className="px-4 py-5 sm:px-6 text-xl">Add comment</div>
+          <div className="px-4 py-5 sm:px-6 text-xl text-pink-600 font-bold">Add comment</div>
           <div className="px-4 py-5 sm:p-6">
             <div className="space-y-5">
   

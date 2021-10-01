@@ -2,53 +2,6 @@ import * as React from "react";
 import {useAuth} from "../../auth";
 
 
-const commentData = [
-    {
-      "_id": "615588db1aa5950020b453c0",
-      "rating": 5,
-      "content": "Test comment3",
-      "movie": "61547ee9465aaf0020be8cae",
-      "userId": "615588811aa5950020b4523b",
-      "userName": "James Ee",
-      "createdAt": "2021-09-30T09:52:27.766Z",
-      "updatedAt": "2021-09-30T09:52:27.766Z",
-      "__v": 0
-    },
-    {
-      "_id": "615588d61aa5950020b453be",
-      "rating": 5,
-      "content": "Test comment3",
-      "movie": "61547ee9465aaf0020be8cae",
-      "userId": "615588811aa5950020b4523b",
-      "userName": "James Ee",
-      "createdAt": "2021-09-30T09:52:22.032Z",
-      "updatedAt": "2021-09-30T09:52:22.032Z",
-      "__v": 0
-    },
-    {
-      "_id": "615588cf1aa5950020b453bb",
-      "rating": 5,
-      "content": "Test comment2",
-      "movie": "61547ee9465aaf0020be8cae",
-      "userId": "615588811aa5950020b4523b",
-      "userName": "James Ee",
-      "createdAt": "2021-09-30T09:52:15.479Z",
-      "updatedAt": "2021-09-30T09:52:15.479Z",
-      "__v": 0
-    },
-    {
-      "_id": "615588c41aa5950020b453b9",
-      "rating": 5,
-      "content": "Test comment1",
-      "movie": "61547ee9465aaf0020be8cae",
-      "userId": "615588811aa5950020b4523b",
-      "userName": "James Ee",
-      "createdAt": "2021-09-30T09:52:04.827Z",
-      "updatedAt": "2021-09-30T09:52:04.827Z",
-      "__v": 0
-    }
-]
-
 const getGalleryListings = (page, signal) =>
     fetch(`https://ecomm-service.herokuapp.com/movie/?limit=6&page=${page}`, {
         signal
@@ -102,7 +55,11 @@ const getWhoAmI = (token, signal) =>
         }
         return response.json();
         })
-    .catch(error => console.log(error));
+    .catch(error => {
+        console.log(error)
+        useAuth().logout();
+
+    });
 
 const postComment = (data, token, signal) =>
     fetch(`https://ecomm-service.herokuapp.com/movie/comment`, {
@@ -144,10 +101,11 @@ export const useGalleryListings = () => {
     const [galleryListings, setGalleryListings] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false)
     const [movie, setMovie] = React.useState(null);
-    const [commentsItems, setCommentsItems] = React.useState(commentData);
+    const [commentsItems, setCommentsItems] = React.useState([]);
     const [userId, setUserId] = React.useState(null);
 
     const auth = useAuth();
+
 
 
     const [page, setPage] = React.useState(()=>{
@@ -193,11 +151,16 @@ export const useGalleryListings = () => {
     React.useEffect(() => {
         const ab = new AbortController();
         const token = localStorage.getItem('auth')
-        token && getWhoAmI(token, ab.signal).then(data => setUserId(data.userId));
+
+        if (!token || auth.status !== "authenticated") {
+            return;
+        }
+        getWhoAmI(token, ab.signal)
+            .then(data => setUserId(data.userId));
         return () => {
             ab.abort();
           };
-    }, []);
+    }, [auth]);
 
     React.useEffect(() => {
         const ab = new AbortController();
@@ -209,7 +172,7 @@ export const useGalleryListings = () => {
             ab.abort();
           };
         // eslint-disable-next-line 
-    }, [page]);
+    }, [page, auth]);
 
     return {
         galleryListings,
