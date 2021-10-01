@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import { GalleryItem } from "domains/gallery";
-
-
-
+import { LoginForm, useAuth} from "domains/auth";
 import { CollectionsContext } from '../domains/gallery';
 
 
@@ -10,7 +8,20 @@ import { CollectionsContext } from '../domains/gallery';
 export const CollectionsPage = () => {
   const collectionsCtx = useContext(CollectionsContext);
 
+  const auth = useAuth();
+
   return (
+    <>
+    {
+      auth.status === "anonymous" &&
+      <main className="bg-gray-50 p-6 sm:p-12 min-h-screen">
+        <div className="max-w-7xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+          <LoginForm />
+        </div>
+      </main>
+    }
+    {
+    auth.status === "authenticated" &&
     <main className="bg-gray-50 lg:flex">
 
       <div className="flex-1">
@@ -56,6 +67,8 @@ export const CollectionsPage = () => {
         </div>
       </div>
     </main>
+    }
+    </>
   );
 }
 

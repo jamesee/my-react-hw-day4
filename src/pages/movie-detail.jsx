@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useGalleryListings } from "domains/gallery";
 import { CommentForm } from "domains/gallery";
 import { CommentItem } from "domains/gallery";
+import { LoginForm, useAuth} from "domains/auth";
+
 
 
 
@@ -11,23 +13,30 @@ export const MoviesDetail = () => {
     const { isLoading, movie, loadMovieById, commentsItems, userId, loadCommentsById, deleteComment, postComment } = useGalleryListings();
 
     const token = localStorage.getItem("auth");
-
+    const auth = useAuth();
 
     // console.log(`userId : ${userId}`)
 
 
     useEffect(() => {
         const ab = new AbortController();
+
+        if (auth.status !== "authenticated") {
+            return
+        }
         loadMovieById(id, ab.signal);
         return () => {
             ab.abort();
         };
         // eslint-disable-next-line
-    }, []);
+    }, [auth]);
 
 
     useEffect(() => {
         const ab = new AbortController();
+        if (auth.status !== "authenticated") {
+            return
+        }
         loadCommentsById(id, ab.signal)
         return () => {
             ab.abort();
@@ -62,6 +71,15 @@ export const MoviesDetail = () => {
     return (
         <>
             {
+                auth.status === "anonymous" &&
+                <main className="bg-gray-50 p-6 sm:p-12 min-h-screen">
+                    <div className="max-w-7xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+                        <LoginForm />
+                    </div>
+                </main>
+            }
+            {
+                auth.status === "authenticated" &&
                 movie && !isLoading &&
                 <div className="
                     grid grid-cols-6 gap-x-1 gap-y-8
@@ -99,16 +117,16 @@ export const MoviesDetail = () => {
                                         {
                                             commentsItems &&
                                             commentsItems.map((comment, index) => (
-                                                
-                                                    <CommentItem
-                                                        loginUserId={userId}
-                                                        id={comment._id}
-                                                        index={index}
-                                                        comment={comment}
-                                                        onDelete={deleteItem}
-                                                        key={comment._id}
-                                                    />
-                    
+
+                                                <CommentItem
+                                                    loginUserId={userId}
+                                                    id={comment._id}
+                                                    index={index}
+                                                    comment={comment}
+                                                    onDelete={deleteItem}
+                                                    key={comment._id}
+                                                />
+
                                             ))}
                                     </ul>
                                 </div>
